@@ -1,4 +1,6 @@
-test
+Test repo for setting up jenkin CI system
 ====
 
-test
+To build egg: python setup.py bdist_egg 
+To run tests: python setup.py nosetests
+ 
