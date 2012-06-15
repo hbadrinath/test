@@ -1,7 +1,25 @@
 #!/usr/bin/env python
 
-from distutils.core import setup
+from distutils.core import setup, Command
+#from distutils.core import setup
 from setuptools import setup
+import os, sys
+
+
+
+class CleanCommand(Command):
+    description = "custom clean command that forcefully removes dist/build directories"
+    user_options = []
+    def initialize_options(self):
+        self.cwd = None
+    def finalize_options(self):
+        self.cwd = os.getcwd()
+    def run(self):
+        #assert os.getcwd() == self.cwd, 'Must be in package root: %s' % self.cwd
+        #os.system('rm -rf ./build ./dist')
+	pass
+
+
 
 setup(
     name='testme',
@@ -27,11 +45,16 @@ setup(
       provides=[
         'testme',
       ],
+      #test_requires=['Nose'] is not required
+      # as its being given as a build dependency
       setup_requires=[
         'nose',
       ],
       install_requires=[
         'setuptools',
-        'greenlet',
       ],
+      test_suite='nose.collector',
+      cmdclass={
+	'clean': CleanCommand,
+      }
       )
